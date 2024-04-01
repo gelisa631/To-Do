@@ -141,6 +141,7 @@ export default function AddTask(){
                                 type="Date"
                                 required
                                 fullWidth
+                                defaultValue="1900-01-01"
                                 className={classes.TextField}
                                 InputLabelProps={{shrink: true}}
                                 label="Due Date"

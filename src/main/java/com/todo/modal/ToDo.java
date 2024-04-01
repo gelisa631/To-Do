@@ -33,7 +33,7 @@ public class ToDo {
         task = "default task description";
         priority = "Low";
         completed = "No";
-        duedate = Date.valueOf("2024-01-01");
+        duedate = Date.valueOf("1990-01-01");
     }
 
     public ToDo(Integer id, String task, String priority, String completed, Date duedate) {

@@ -106,7 +106,14 @@ export default function ViewTask({...props}){
             <Link className={classes.link} to="/">
                 {" "}
                 <Typography align="left">
-                    Go back to Add Task
+                    Add Task
+                </Typography>
+                {" "}
+            </Link>
+            <Link className={classes.link} to="/update">
+                {" "}
+                <Typography align="left">
+                    Update Task
                 </Typography>
                 {" "}
             </Link>

@@ -44,8 +44,8 @@ public class ToDoController {
     }
 
     @PutMapping("/id")
-    public ToDo update(@RequestBody ToDo id){
-        toDoService.save(id);
-        return id;
+    public ToDo update(@RequestBody ToDo task){
+        toDoService.save(task);
+        return task;
     }
 }
