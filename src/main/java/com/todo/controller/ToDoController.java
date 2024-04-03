@@ -37,7 +37,7 @@ public class ToDoController {
         return toDoService.get(id);
     }
 
-    @DeleteMapping("/employee/{id}")
+    @DeleteMapping("/task/{id}")
     public String delete(@PathVariable int id){
         toDoService.delete(id);
         return "Task removed with id: " + id;
