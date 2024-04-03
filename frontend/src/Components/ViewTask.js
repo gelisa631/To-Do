@@ -117,6 +117,13 @@ export default function ViewTask({...props}){
                 </Typography>
                 {" "}
             </Link>
+            <Link className={classes.link} to="/delete">
+                {" "}
+                <Typography align="left">
+                    Delete Task
+                </Typography>
+                {" "}
+            </Link>
         </div>
     );
 }

@@ -68,7 +68,6 @@ export default function AddTask(){
         );
 
         let body = await response.json();
-        console.log(body.id);
         setMessage(body.id ? "Posted task successfully" : "Task was not posted");
     }
 

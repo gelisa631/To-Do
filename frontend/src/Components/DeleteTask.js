@@ -12,7 +12,7 @@ import ListAltIcon from "@material-ui/icons/ListAlt";
 import { Link } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import TextField from "@material-ui/core/TextField";
+import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles(theme => ({
@@ -42,24 +42,18 @@ const useStyles = makeStyles(theme => ({
             color: "rgba(0,0,0,1)"
         }
     },
-    submit: {
-        margin: theme.spacing(3, 0, 2),
-        minWidth: 400
-    },
+    RemoveCircleOutlineIcon:{
+        color: "green"
+    }
 }));
 
-export default function UpdateTask({...props}){
+export default function DeleteTask({...props}){
     const classes = useStyles(props);
 
     const [data, updateData] = React.useState([]);
     const [firstLoad, setLoad] = React.useState(true);
     let isLoading = true;
-    const [id, setId] = React.useState(0);
-    const [selectedDate, setSelectedDate] = React.useState(new Date("2000-01-01T00:00:00"));
-    const [task, setTask] = React.useState("");
-    const [priority, setPriority] = React.useState("");
-    const [completed, setCompleted] = React.useState("");
-    const [message, setMessage] = React.useState("Nothing was updated");
+    const [message, setMessage] = React.useState("Nothing was deleted");
 
     async function getTasks() {
         let response = await fetch("/api/todo");
@@ -76,15 +70,11 @@ export default function UpdateTask({...props}){
         isLoading = false;
     }
 
-    const handleCompletedChange = event => {
-        setCompleted(event.target.value);
-    }
-
-    async function updateTask(toInput){
+    async function deleteTask(toDelete){
         const response = await fetch(
-            "/api/id",
+            "/api/task/" + toDelete,
             {
-                method: "PUT",
+                method: "DELETE",
                 mode: "cors",
                 cache: "no-cache",
                 credentials: "same-origin",
@@ -93,18 +83,19 @@ export default function UpdateTask({...props}){
                 },
                 redirect: "follow",
                 referrerPolicy: "no-referrer",
-                body: JSON.stringify(toInput)
+                body: JSON.stringify(toDelete)
 
             }
         );
 
-        let body = await response.json();
-        setMessage(body.id ? "Updated task successfully" : "Task was not updated");
+        let body = await response.text();
+        setMessage(body ? "Task was deleted successfully" : "Task was not deleted");
+        getTasks();
     }
 
-    const handleSubmit = (event) => {
-        const toInput = { id, task, priority, completed, duedate : selectedDate};
-        updateTask(toInput);
+    const handleSubmit = (e) => {
+        const toDelete = e.currentTarget.getAttribute('id');
+        deleteTask(toDelete);
     };
 
     return (
@@ -113,7 +104,7 @@ export default function UpdateTask({...props}){
                 <ListAltIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-                Update Task
+                Task List
             </Typography>
 
             { isLoading ?
@@ -125,6 +116,7 @@ export default function UpdateTask({...props}){
                         <Table className={classes.table} aria-label="simple table">
                             <TableHead>
                                 <TableRow>
+                                    <TableCell align="center">Remove</TableCell>
                                     <TableCell align="center">Task</TableCell>
                                     <TableCell align="center">Priority</TableCell>
                                     <TableCell align="center">Completed</TableCell>
@@ -133,27 +125,21 @@ export default function UpdateTask({...props}){
                             </TableHead>
                             <TableBody>
                                 { data?.map(row => (
-                                    <TableRow key={row.id}>
+                                    <TableRow key={row.task}>
+                                        <TableCell align="center">
+                                            <Button
+                                                variant="contained"
+                                                color="primary"
+                                                className={classes.submit}
+                                                id={row.id}
+                                                onClick={handleSubmit}
+                                            >
+                                                <RemoveCircleOutlineIcon/>
+                                            </Button>
+                                        </TableCell>
                                         <TableCell align="center">{row.task}</TableCell>
                                         <TableCell align="center">{row.priority}</TableCell>
-                                        <TableCell align="center">
-                                            <TextField
-                                                autoComplete="completed"
-                                                name="completed"
-                                                variant="outlined"
-                                                required
-                                                fullWidth
-                                                defaultValue={row.completed}
-                                                id="completed"
-                                                onChange= {(e) => {
-                                                    handleCompletedChange(e);
-                                                    setId(row.id);
-                                                    setTask(row.task);
-                                                    setPriority(row.priority);
-                                                    setSelectedDate(row.duedate);
-                                                }}
-                                            />
-                                        </TableCell>
+                                        <TableCell align="center">{row.completed}</TableCell>
                                         <TableCell align="center">{row.duedate}</TableCell>
                                     </TableRow>
 
@@ -163,6 +149,9 @@ export default function UpdateTask({...props}){
                     </TableContainer>
                 )
             }
+            <Typography style={{ margin:7 }} variant="body1">
+                Status: {message}
+            </Typography>
             <Link className={classes.link} to="/">
                 {" "}
                 <Typography align="left">
@@ -170,25 +159,13 @@ export default function UpdateTask({...props}){
                 </Typography>
                 {" "}
             </Link>
-            <Link className={classes.link} to="/delete">
+            <Link className={classes.link} to="/update">
                 {" "}
                 <Typography align="left">
-                    Delete Task
+                    Update Task
                 </Typography>
                 {" "}
             </Link>
-            <Button
-
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-                onClick={handleSubmit}
-            >
-                Save
-            </Button>
-            <Typography style={{ margin:7 }} variant="body1">
-                Status: {message}
-            </Typography>
         </div>
     );
 }
