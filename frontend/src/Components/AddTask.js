@@ -3,7 +3,6 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import ListAltIcon from "@material-ui/icons/ListAlt";
 import Typography from "@material-ui/core/Typography";
@@ -157,11 +156,6 @@ export default function AddTask(){
                     >
                         Save
                     </Button>
-                    <Grid container justifyContent="center">
-                        <Grid item>
-                            <Link to="/view">View Tasks</Link>
-                        </Grid>
-                    </Grid>
                 </form>
                 <Typography style={{ margin:7 }} variant="body1">
                     Status: {message}

@@ -9,7 +9,6 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Avatar from "@material-ui/core/Avatar";
 import ListAltIcon from "@material-ui/icons/ListAlt";
-import { Link } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import TextField from "@material-ui/core/TextField";
@@ -163,20 +162,6 @@ export default function UpdateTask({...props}){
                     </TableContainer>
                 )
             }
-            <Link className={classes.link} to="/">
-                {" "}
-                <Typography align="left">
-                    Add Task
-                </Typography>
-                {" "}
-            </Link>
-            <Link className={classes.link} to="/delete">
-                {" "}
-                <Typography align="left">
-                    Delete Task
-                </Typography>
-                {" "}
-            </Link>
             <Button
 
                 variant="contained"

@@ -9,7 +9,6 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Avatar from "@material-ui/core/Avatar";
 import ListAltIcon from "@material-ui/icons/ListAlt";
-import { Link } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
@@ -152,20 +151,6 @@ export default function DeleteTask({...props}){
             <Typography style={{ margin:7 }} variant="body1">
                 Status: {message}
             </Typography>
-            <Link className={classes.link} to="/">
-                {" "}
-                <Typography align="left">
-                    Add Task
-                </Typography>
-                {" "}
-            </Link>
-            <Link className={classes.link} to="/update">
-                {" "}
-                <Typography align="left">
-                    Update Task
-                </Typography>
-                {" "}
-            </Link>
         </div>
     );
 }
